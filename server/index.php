@@ -70,14 +70,14 @@ class Controller{
             if($metoda!=='POST'){
                 throw new Exception('Putanja nije pronadjena');
             }
-            $this->proizvodServis->kreirajProizvod($_POST['naziv']);
+            $this->proizvodServis->kreirajProizvod($_POST['naziv'],$_POST['sifra'],$_POST['serijskiBroj'],$_POST['prodajnaCena'],$_POST['opis'],$_POST['stanje'],$_POST['kupovnaCena'],$_POST['vrsta']);
             return null;
         }
         if($operacija=='izmeniProizvod'){
             if($metoda!=='POST'){
                 throw new Exception('Putanja nije pronadjena');
             }
-            $this->proizvodServis->izmeniProizvod($_POST['id'],$_POST['naziv']);
+            $this->proizvodServis->izmeniProizvod($_POST['id'],$_POST['naziv'],$_POST['sifra'],$_POST['serijskiBroj'],$_POST['prodajnaCena'],$_POST['opis'],$_POST['stanje'],$_POST['kupovnaCena'],$_POST['vrsta']);
             return null;
         }
         if($operacija=='obrisiProizvod'){

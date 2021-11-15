@@ -12,7 +12,7 @@ class ProizvodServis{
         $data= $this->broker->izvrsiCitanje("select p.*,v.naziv as 'naziv_vrste' from proizvod p left join vrsta_proizvoda v on(p.vrsta_id=v.id)");
         $res=[];
         foreach ($data as $red) {
-            $res[]=[
+            $val=[
                 "id"=>$red->id,
                 "naziv"=>$red->naziv,
                 "sifra"=>$red->sifra,
@@ -21,11 +21,13 @@ class ProizvodServis{
                 "opis"=>$red->opis,
                 "stanje"=>$red->stanje,
                 "kupovnaCena"=>$red->kupovna_cena,
-                "vrsta"=>[
-                    "id"=>$red->vrsta_id,
-                    "naziv"=>$red->$naziv_vrste
-                ]
+               
             ];
+            if(isset($red->vrsta_id)){
+                $val['vrsta']['id']=$red->vrsta_id;
+                $val['vrsta']['naziv']=$red->naziv_vrste;
+            }
+            $res[]=$val;
         }
         return $res;
     }
@@ -57,7 +59,7 @@ class ProizvodServis{
         }
         $this->broker->izvrsiIzmenu("insert into proizvod(naziv,sifra,serijski_broj,prodajna_cena,opis,stanje,kupovna_cena,vrsta_id) values ('".$naziv."','".$sifra."','".$serijskiBroj."',".$prodajnaCena.",'".$opis."',".$stanje.",".$kupovnaCena.",".$vrstaId.")");
     }
-    public function izmeniProizvod($id,$naziv){
+    public function izmeniProizvod($id,$naziv,$sifra,$serijskiBroj,$prodajnaCena,$opis,$stanje,$kupovnaCena,$vrstaId){
         if(!isset($id)){
             throw new Exception("id nije prosledjen");
         }
